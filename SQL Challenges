@@ -189,3 +189,41 @@ SELECT department, AVG(salary) AS avg_salary
 FROM employees
 GROUP BY department
 HAVING avg_salary>=70000;
+
+#SQL CHALLENGE 6: COMPANY MARATHON DATABASE
+CREATE TABLE marathon (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+   participant_name TEXT,
+   previous_experience TEXT,
+   completion_fraction REAL);
+
+INSERT INTO marathon (participant_name, previous_experience,  completion_fraction)
+    VALUES ("Sadie Hawkins", "yes", 1);
+INSERT INTO marathon (participant_name, previous_experience,  completion_fraction)
+    VALUES ("Brandon Flowers", "no", 0.241);
+INSERT INTO marathon (participant_name, previous_experience,  completion_fraction)
+    VALUES ("Michael Scott", "no", 0.804);
+INSERT INTO marathon (participant_name, previous_experience,  completion_fraction)
+    VALUES ("Karamo Brown", "yes", 0.9512);
+INSERT INTO marathon (participant_name, previous_experience,  completion_fraction)
+    VALUES ("Antoni Porowski", "yes", 0.640);
+INSERT INTO marathon (participant_name, previous_experience,  completion_fraction)
+    VALUES ("Rajnighanda Kapoor", "no", 1);
+
+#1. Show all participants and the percent they completed.
+SELECT participant_name, completion_fraction*100 AS completion_percent
+FROM marathon;
+
+#2. Show all participants and the percent they completed rounded to one decimal.
+SELECT participant_name, ROUND(completion_fraction*100, 1) AS completion_percent
+FROM marathon;
+
+#3. Show the number of employees who completed each quarter of the marathon (>=75%, 50%, 25%, or <25%).
+SELECT COUNT(*) AS quantity,
+CASE WHEN completion_fraction>=.75 THEN "75%+"
+WHEN completion_fraction>=.50 THEN "50%+"
+WHEN completion_fraction>.25 THEN "25%+"
+ELSE "Under 25%"
+END AS "quarter_completed"
+FROM marathon
+GROUP BY "quarter_completed";
