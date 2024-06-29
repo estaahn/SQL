@@ -1,1 +1,102 @@
+#This file contains various SQL challenges to showcase my learning of basic to advanced SQL skills:
 
+#SQL CHALLENGE 1: HIT MOVIES
+CREATE TABLE movies (
+	id INTEGER PRIMARY KEY,
+	title TEXT,
+	released INTEGER
+);
+
+INSERT INTO movies VALUES (1, "Tenet", 2020);
+INSERT INTO movies VALUES (2, "Wonder Woman 1984", 2020);
+INSERT INTO movies VALUES (3, "Soul", 2020);
+INSERT INTO movies VALUES (4, "The Midnight Sky", 2020);
+INSERT INTO movies VALUES (5, "Godzilla vs. Kong", 2021);
+INSERT INTO movies VALUES (6, "A Quiet Place Part II", 2021);
+
+#1. Select all movies.
+SELECT *
+FROM movies;
+#2. Show all information for movies released from 2021 or later in order by newest to oldest.
+SELECT *
+FROM movies
+WHERE title
+ORDER BY released>=2021 DESC;
+
+#SQL CHALLENGE 2: E-COMM DATABASE
+CREATE TABLE ecom_data (
+    user_id VARCHAR(50),
+    session_duration INT,
+    purchase_flag BIT,
+    amount_spent DECIMAL(10, 2),
+    item_name VARCHAR(50)
+);
+
+INSERT INTO ecom_data (user_id, session_duration, purchase_flag, amount_spent, item_name)
+VALUES
+    ('aBcDeF123456', 3, 1, 25.50, 'Wireless Earbuds'),
+    ('gHiJkL789012', 4, 0, 0.00, NULL),
+    ('mNoPqR345678', 6, 1, 75.20, 'Smartphone Case'),
+    ('sTuVwX901234', 2, 0, 0.00, NULL),
+    ('yZaBcD567890', 5, 1, 10.75, 'Portable Charger'),
+    ('eFgHiJ123456', 4, 0, 0.00, NULL),
+    ('kLmNoP789012', 1, 1, 50.00, 'Bluetooth Speaker'),
+    ('qRsTuV345678', 2, 0, 0.00, NULL),
+    ('wXyZaB901234', 3, 1, 20.90, 'Fitness Tracker'),
+    ('zN53qR345321', 6, 1, 75.20, 'Smartphone Case'),
+    ('QrSFgH561764', 1, 1, 50.00, 'Bluetooth Speaker'),
+    ('cDeFgH567890', 4, 1, 150.75, 'Smartwatch');
+
+#1. Show the SUM of all minutes users spent shopping.
+SELECT SUM(session_duration)
+FROM ecom_data;
+
+#2. Show the SUM of all minutes users spent shopping for each item.
+SELECT SUM(session_duration), item_name
+FROM ecom_data
+GROUP BY item_name;
+
+#SQL CHALLENGE 3: BANK DATABASE
+CREATE TABLE bank_products (
+    product_id INTEGER PRIMARY KEY,
+    product_name TEXT,
+    product_type TEXT,
+    interest_rate DECIMAL(5, 2),
+    monthly_fee DECIMAL(6, 2),
+    minimum_balance DECIMAL(10, 2)
+);
+
+INSERT INTO bank_products (product_id, product_name, product_type, interest_rate, monthly_fee, minimum_balance)
+VALUES
+    (1, 'Savings Account', 'Savings', 0.75, 0.00, 100.00),
+    (2, 'Checking Account', 'Checking', 0.25, 5.00, 50.00),
+    (3, 'Business Account', 'Business', 1.50, 10.00, 500.00),
+    (4, 'Credit Card', 'Credit Card', 18.99, 0.00, 0.00),
+    (5, 'Mortgage Loan', 'Loan', 3.25, 0.00, 100000.00),
+    (6, 'Certificate of Deposit', 'Savings', 1.50, 0.00, 1000.00),
+    (7, 'Student Checking Account', 'Checking', 0.10, 0.00, 10.00),
+    (8, 'Business Credit Card', 'Credit Card', 16.99, 0.00, 0.00),
+    (9, 'Home Equity Loan', 'Loan', 4.50, 0.00, 50000.00),
+    (10, 'IRA Account', 'Savings', 1.25, 0.00, 500.00),
+    (11, 'Personal Loan', 'Loan', 8.75, 0.00, 5000.00),
+    (12, 'Money Market Account', 'Savings', 1.00, 0.00, 500.00),
+    (13, 'Youth Savings Account', 'Savings', 0.50, 0.00, 10.00),
+    (14, 'Rewards Credit Card', 'Credit Card', 21.99, 0.00, 0.00),
+    (15, 'Auto Loan', 'Loan', 4.25, 0.00, 20000.00);
+
+#1. Show all bank product names.
+SELECT product_name
+FROM bank_products;
+
+#2. Show products names with "Checking" or "Savings" product types.
+SELECT product_name
+FROM bank_products
+WHERE product type="Checking"
+OR product_type="Savings";
+
+#3. Show product names that have a Savings product type with an interest rate of at least 0.75 and no monthly fee.
+SELECT product_name
+FROM bank_products
+WHERE product_type="Savings"
+AND interest_rate>=0.75
+AND monthly_fee=0;
