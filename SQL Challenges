@@ -370,4 +370,26 @@ VALUES
     (4, 1, 'Books', 2.0, 'Standard', '2023-04-20', '2023-04-25', 'Delivered'),
     (5, 6, 'Automotive Parts', 12.7, 'Express', '2023-05-15', '2023-05-20', 'In Transit'),
     (10, 3, 'Food & Beverages', 7.2, 'Standard', '2023-10-03', '2023-10-08', 'Delivered');
+#1. All customer IDs, customer names, and customer emails, as well as shipping methods each customer used selected in order by customer_id.
+SELECT distinct cstm.customer_id, cstm.customer_name, cstm.contact_email, ship.shipping_method
+FROM customers cstm
+LEFT JOIN shipments ship
+ON cstm.customer_id=ship.sender_id
+ORDER BY cstm.customer_id asc;
 
+#2. All customer IDs, customer names, customer emails, and shipping methods from the database but only for customers who have detailed history ordered by customer ID.
+SELECT distinct cstm.customer_id, cstm.customer_name, cstm.contact_email, ship.shipping_method
+FROM customers cstm
+INNER JOIN shipments ship
+ON cstm.customer_id=ship.sender_id
+ORDER BY cstm.customer_id asc;
+
+#3. All customer IDs, customer names, customer emails, and shipping methods from the database, but only for the customers we have detailed shipping history for (ie, customers
+for whom we have detailed shipping history for (ie, customers for whom we have info in the shipments table), and who have only used the Standard shipping method before ordered
+by customer ID.
+SELECT distinct cstm.customer_id, cstm.customer_name, cstm.contact_email, ship.shipping_method
+FROM customers cstm
+INNER JOIN shipments ship
+ON cstm.customer_id=ship.sender_id
+WHERE ship.shipping_method='Standard'
+ORDER BY cstm.customer_id asc;
