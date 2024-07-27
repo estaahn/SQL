@@ -1,1 +1,55 @@
+#In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data.
+
+#1. Number of orders placed in January
+SELECT COUNT(orderID)
+FROM BIT_DB.JanSales
+WHERE length(orderid)=6
+AND orderid <> 'Order ID';
+
+#2. The quantity of iPhone products in January Sales
+SELECT COUNT(orderid)
+FROM BIT_DB.JanSales
+WHERE Product='IPhone'
+AND length(orderid)=6
+AND orderid <> 'Order ID';
+
+#3. Select all customer account numbers for orders placed in February
+SELECT distinct acctnum
+FROM BIT_DB.customers cstm
+INNER JOIN BIT_DB.FebSales feb
+ON cstm.order_id=FEB.orderid
+WHERE length(orderid)=6
+AND orderid <> 'Order ID';
+
+#4. Select the cheapest product sold in January and its price
+SELECT product
+, min(price)
+FROM BIT_DB.JanSales
+GROUP BY product, price
+ORDER BY price ASC
+LIMIT 1;
+
+#5. Total revenue for each product sold in January
+SELECT sum(quantity)*price AS revenue
+, product
+FROM BIT_DB.JanSales
+GROUP BY product;
+
+#6. The products sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold and the total revenue
+SELECT sum(quantity)
+, product
+, sum(quantity)*price AS revenue
+FROM BIT_DB.FebSales
+WHERE location = '548 Lincoln St, Seattle, WA 98101'
+GROUP BY product;
+
+#7. Quantity of customers that ordered more than 2 products at a time in February and the avg amt spent for those customers
+SELECT count(distinct cstm.acctnum)
+, avg(quantity*price)
+FROM BIT_DB.FebSales feb
+LEFT JOIN BIT_DB.customers cstm
+ON cstm.order_ID=feb.orderid
+WHERE feb.quantity>2
+AND length(orderid)=6
+AND orderid <> 'Order ID';
 
