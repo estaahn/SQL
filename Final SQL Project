@@ -1,4 +1,5 @@
-#I downloaded a database
+#I downloaded a database and familiarized myself with the data by visualizing how the tables are related and determined what I wanted to know from the dataset.
+#Then, I answered them using SQL.
 
 #1. All customers (their full names, customer ID, and country) who are not in the US
 SELECT customerid
