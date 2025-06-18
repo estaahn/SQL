@@ -52,21 +52,23 @@ VALUES
     (15, 'Cozy Throw Blanket', 'Furnishings', 24.99, 100, 4.2);
 
 #Below are queries I generated based on the table above:
--- Write a query that orders the items by price.
-SELECT item_name, price
+-- Show all items in descending order
+SELECT *
 FROM superstore
-ORDER BY price;
+ORDER BY price DESC;
 
--- Show a statistic about the item prices. 
+-- The average of prices in each category
+SELECT AVG(price), category
+FROM superstore
+GROUP BY category
+ORDER BY AVG(price) DESC;
+
+-- The total price for all items in Kitchen Supplies
 SELECT SUM(price)
-FROM superstore;
-
--- Show a statistic about the price for items in the category of "Kitchen Supplies".
-SELECT AVG(price)
 FROM superstore
 WHERE category="Kitchen Supplies";
 
--- Show the average of stock quantity in the category "Electronics".
+-- Average stock quantity in Appliances
 SELECT AVG(stock_quantity)
 FROM superstore
-WHERE category="Electronics";
+WHERE category="Appliances";
