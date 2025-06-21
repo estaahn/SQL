@@ -77,7 +77,7 @@ FROM fortune_companies
 GROUP by industry
 HAVING average_revenue>=300;
 
--- List of the number of companies in each industry whose employees have at least 20 hours of PTO
+-- List of the number of companies in each industry whose employees have at least 20 hours of PTO.
 SELECT industry, COUNT(company_name) AS quantity
 FROM fortune_companies
 WHERE paid_time_off_days>=20
