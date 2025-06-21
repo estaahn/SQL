@@ -58,12 +58,12 @@ VALUES
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
--- List all company names for the Healthcare industry.
+-- A list of all company names for the Healthcare industry.
 SELECT company_name, industry
 FROM fortune_companies
 WHERE industry="Healthcare";
 
--- List all companies with an avg employee tenure >6, 5, <5.
+-- A list of all companies with an avg employee tenure >6, 5, <5.
 SELECT company_id, company_name, avg_employee_tenure,
 CASE WHEN avg_employee_tenure >=6 THEN "excellent"
 WHEN avg_employee_tenure=5 THEN "good"
@@ -71,16 +71,17 @@ ELSE "poor"
 END AS tenure_status
 FROM fortune_companies;
 
--- List all industries with an average revenue of 300.
+-- A list of all industries with an average revenue of 300.
 SELECT industry, AVG(revenue) AS average_revenue
 FROM fortune_companies
 GROUP by industry
 HAVING average_revenue>=300;
 
--- List the number of companies in each industry
+-- List of the number of companies in each industry whose employees have at least 20 hours of PTO
 SELECT industry, COUNT(company_name) AS quantity
 FROM fortune_companies
-GROUP by industry;
+WHERE paid_time_off_days>=20
+GROUP BY industry;
 
 -- List the number of companies in each industry with that provides healthcare benefits and at least 10 weeks of maternity leave.
 SELECT industry, COUNT(company_name) AS quantity
