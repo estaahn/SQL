@@ -58,12 +58,13 @@ VALUES
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
--- A list of all company names for the Healthcare industry.
-SELECT company_name, industry
+-- 1. A list of all company names in the Technology industry.
+SELECT company_name AS companies
+, industry
 FROM fortune_companies
-WHERE industry="Healthcare";
+WHERE industry = 'Technology';
 
--- A list of all companies with an avg employee tenure >6, 5, <5.
+-- 2. A list of all companies with an avg employee tenure >6, 5, <5.
 SELECT company_id, company_name, avg_employee_tenure,
 CASE WHEN avg_employee_tenure >=6 THEN "excellent"
 WHEN avg_employee_tenure=5 THEN "good"
