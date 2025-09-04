@@ -43,7 +43,7 @@ GROUP BY category;
 
 -- 3. Find the average price of all items in the Kitchen supplies category.
 SELECT category
-, AVG(price) AS average_price
+, AVG(price) as average_total
 FROM superstore
 WHERE category = 'Kitchen Supplies';
 
