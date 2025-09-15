@@ -1,6 +1,6 @@
 #For this project I downloaded Spotify data provided by my online certification course.
 #Then inserted the Spotify data .csv into the table
-#Finally, I performed data analytics on the data using SQL.
+#Finally, I performed analytics on the data using SQL.
 
 #The table provided:
 CREATE TABLE BIT_DB.Spotifydata (
@@ -42,17 +42,3 @@ SELECT artist_name
 FROM BIT_DB.Spotifydata
 ORDER BY popularity desc
 LIMIT 5;
-
-#Using a CTE, calculate the avg popularity for artists then for every artist with an avg popularity of 90 or above with their name and avg popularity labeling them as a "Top Star"
-WITH popularity_average_CTE AS (
-SELECT s.artist_name
-, avg(s.popularity) as average_popularity
-FROM Spotifydata s
-GROUP BY s.artist_name
-)
-
-SELECT artist_name
-    , average_popularity
-    , 'Top Star' AS tag
-FROM popularity_average_CTE
-WHERE average_popularity>=90;
