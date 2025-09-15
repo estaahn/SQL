@@ -1,0 +1,68 @@
+Climate Conference Project
+Database: https://www.db-fiddle.com/f/pxMci1sLL945KHKYvpe9W6/1
+
+-- LEFT JOIN: List all VIPs and their associated hotel reservations, including VIPs who may not have made a reservation.
+SELECT vips.last_name
+, vips.first_name
+, reservations.hotel
+FROM vips
+LEFT JOIN reservations
+ON vips.member_id = reservations.member_id;
+
+-- INNER JOIN: Find the names of all the VIPs who RSVP'd for the dinner event.
+SELECT vips.first_name
+, vips.last_name
+FROM vips
+JOIN reservations
+ON vips.member_id = reservations.member_id
+WHERE reservations.dinner_rsvp = '1';
+
+-- Multiple JOINs: Retrieve the event names, attendee names, and their hotel names.
+SELECT e.event_name
+, v.first_name
+, v.last_name
+, h.hotel_name
+FROM vips AS v
+INNER JOIN events AS e ON v.event = e.event_id
+LEFT JOIN reservations AS r ON v.member_id = r.member_id
+LEFT JOIN hotels AS h ON r.hotel = h.hotel_id;
+
+-- SELF JOIN: Find the VIP name pairings of givers and receivers of feedback.
+SELECT giver.first_name || ' ' || giver.last_name AS giver_name
+, receiver.first_name || ' ' || receiver.last_name AS receiver_name
+FROM vips AS giver
+JOIN vips AS receiver
+ON giver.provides_feedback_to = receiver.member_id
+ORDER BY giver_name;
+
+-- Query with a Subquery: Find VIPs staying at the hotel with the most reservations.
+SELECT v.first_name
+, v.last_name
+, h.hotel_name
+FROM vips AS v
+JOIN reservations AS r ON v.member_id = r.member_id
+JOIN hotels AS h ON r.hotel = h.hotel_id
+WHERE r.hotel = (
+  SELECT hotel
+  FROM reservations
+  GROUP BY hotel
+  ORDER BY COUNT(*) DESC
+  LIMIT 1
+);
+
+-- Custom query: Get a list of all education-affiliated VIPs who have RSVP'd for the welcome event.
+SELECT v.first_name
+, v.last_name
+, v.association
+FROM vips AS v
+JOIN reservations AS r
+ON r.member_id = v.member_id
+WHERE v.assoc_type = 'education'
+AND r.welcome_rsvp = '1';
+
+-- Custom query: Find the number of VIPs attending each type of event.
+SELECT e.event_name
+, COUNT(v.member_id) AS attendance
+FROM events AS e
+LEFT JOIN vips AS v ON e.event_id = v.event
+GROUP BY e.event_name;
