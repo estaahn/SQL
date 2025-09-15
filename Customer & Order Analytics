@@ -70,11 +70,13 @@ and orderid <> 'Order ID'
 GROUP by location
 HAVING count(orderID)>2;
 
-#10. Quantity of each type of headphones sold in January
+#10. Quantity of each type of headphones sold in February
 SELECT distinct product
 , sum(quantity) AS quantity
 FROM BIT_DB.FebSales
 WHERE product LIKE '%Headphones%'
+AND length(orderID)=6
+AND orderID <> 'Order ID'
 GROUP BY product;
 
 #11. The avg amt spent per account in February (essentially the avg amt spent of all accounts)
@@ -93,11 +95,21 @@ ON feb.orderid=cstm.order_id
 WHERE length(orderid)=6
 AND orderid <> 'Order ID';
 
-#13. Product that brought in the most revenue and its total revenue
+#13. Product that brought in the most revenue in January and its total revenue
 SELECT product
 , sum(quantity*price)
 FROM BIT_DB.JanSales
 GROUP BY product
 ORDER BY sum(quantity*price) desc
 LIMIT 1;
+
+#14. Retrieve order ids from Georgia (GA) where the average price is greater than $1000 and the dates begin with '04/1'
+SELECT orderID
+FROM BIT_DB.AprSales
+WHERE orderdate like '04/1%' 
+AND location like '%GA%'
+AND length(orderid)=6
+AND orderid <> 'Order ID'
+GROUP BY orderID
+HAVING AVG(price) > 1000;
 
