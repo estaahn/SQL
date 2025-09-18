@@ -42,3 +42,10 @@ SELECT artist_name
 FROM BIT_DB.Spotifydata
 ORDER BY popularity desc
 LIMIT 5;
+
+#And retrieved the top 3 artists with the highest danceability
+SELECT artist_name
+, danceability
+FROM BIT_DB.Spotifydata
+ORDER BY danceability desc
+LIMIT 3;
